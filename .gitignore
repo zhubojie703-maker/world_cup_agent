@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Environment and secrets
+.env
+.venv/
+venv/
+env/
+
+# Local runtime artifacts
+output/
+.playwright-cli/
+*.log
+streamlit.*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local notebooks / temp
+.ipynb_checkpoints/
+tmp/
