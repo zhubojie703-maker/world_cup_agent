@@ -8,6 +8,7 @@ import pandas as pd
 import streamlit as st
 
 from src.access_control import is_admin_authenticated, should_show_admin_gate, visible_tabs
+from src.poster import generate_poster, poster_to_bytes
 from src.recommender import build_user_tags, recommend_team
 from src.storage import (
     answer_data_question,
@@ -207,6 +208,22 @@ def render_agent() -> None:
             """,
             unsafe_allow_html=True,
         )
+        poster_img = generate_poster(
+            team_name=result["team_name"],
+            persona=result["persona"],
+            reason=result["reason"],
+            copy_text=result["copy_text"],
+        )
+        st.image(poster_img, caption="📸 长按保存你的主队人格卡", use_container_width=True)
+
+        png_bytes = poster_to_bytes(poster_img)
+        st.download_button(
+            label="⬇️ 下载海报图片",
+            data=png_bytes,
+            file_name=f"worldcup_{result['team_name']}.png",
+            mime="image/png",
+        )
+
         st.text_area("可复制文案", result["copy_text"], height=180)
         if st.button("我已复制这段文案", disabled=st.session_state.copied):
             if session_id:
